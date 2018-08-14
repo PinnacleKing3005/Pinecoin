@@ -35,16 +35,6 @@ win32 {
   QRENCODE_LIB_PATH=C:/devel/qrencode-3.4.4/.libs
 }
 
-macx {
- BOOST_INCLUDE_PATH=/usr/local/Cellar/boost\@1.57/1.57.0/include
- BOOST_LIB_PATH=/usr/local/Cellar/boost\@1.57/1.57.0/lib
- BDB_INCLUDE_PATH=/usr/local/Cellar/berkeley-db\@4/4.8.30/include
- BDB_LIB_PATH=/usr/local/Cellar/berkeley-db\@4/4.8.30/lib
- OPENSSL_INCLUDE_PATH=/usr/local/opt/openssl/include
- OPENSSL_LIB_PATH=/usr/local/opt/openssl/lib
- MINIUPNPC_INCLUDE_PATH=/usr/local/Cellar/miniupnpc/2.0.20180410/include
- MINIUPNPC_LIB_PATH=/usr/local/Cellar/miniupnpc/2.0.20180410/lib
-}
 
 #QRENCODE_INCLUDE_PATH=C:/deps/qrencode-3.4.4
 #QRENCODE_LIB_PATH=C:/deps/qrencode-3.4.4/.libs
@@ -54,8 +44,11 @@ UI_DIR = build
 
 # use: qmake "RELEASE=1"
 contains(RELEASE, 1) {
-    # Mac: compile for maximum compatibility (10.5, 32-bit)
-    macx:QMAKE_CXXFLAGS += -mmacosx-version-min=10.13 -arch x86_64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk
+    # Mac
+    macx:QMAKE_CXXFLAGS += -mmacosx-version-min=10.8 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk -stdlib=libc++
+    macx:QMAKE_CFLAGS += -mmacosx-version-min=10.8 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk -stdlib=libc++
+    macx:QMAKE_LFLAGS += -mmacosx-version-min=10.8 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk -stdlib=libc++
+    macx:QMAKE_OBJECTIVE_CFLAGS += -mmacosx-version-min=10.8 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk -stdlib=libc++
 
     !windows:!macx {
         # Linux: static link
@@ -412,6 +405,17 @@ isEmpty(BOOST_LIB_PATH) {
 isEmpty(BOOST_INCLUDE_PATH) {
     macx:BOOST_INCLUDE_PATH = /opt/local/include
 }
+
+isEmpty(OPENSSL_LIB_PATH) {
+    macx:OPENSSL_LIB_PATH = /opt/local/lib
+    windows:OPENSSL_LIB_PATH = C:\legends\openssl-1.0.2o
+}
+
+isEmpty(OPENSSL_INCLUDE_PATH) {
+    macx:OPENSSL_INCLUDE_PATH = /opt/local/include/openssl
+    windows:OPENSSL_INCLUDE_PATH = C:\legends\openssl-1.0.2o\include
+}
+
 
 windows:DEFINES += WIN32
 windows:RC_FILE = src/qt/res/bitcoin-qt.rc
