@@ -2535,10 +2535,12 @@ bool LoadBlockIndex(bool fAllowNew)
         //// debug print
         block.print();
         
+        /*
         printf("block.GetHash() == %s\n", block.GetHash().ToString().c_str());
         printf("block.hashMerkleRoot == %s\n", block.hashMerkleRoot.ToString().c_str());
         printf("block.nTime = %u \n", block.nTime);
         printf("block.nNonce = %u \n", block.nNonce);
+        */
                 
         assert(block.hashMerkleRoot == uint256("0xc1c4b83fa36e155aead135fa150eb24a4cd8ab62580a5c2a7b7be31979e8e9c0"));
         assert(block.GetHash() == (!fTestNet ? hashGenesisBlock : hashGenesisBlockTestNet));
@@ -2807,7 +2809,7 @@ bool static AlreadyHave(CTxDB& txdb, const CInv& inv)
 // The message start string is designed to be unlikely to occur in normal data.
 // The characters are rarely used upper ASCII, not valid as UTF-8, and produce
 // a large 4-byte int at any alignment.
-unsigned char pchMessageStart[4] = { 0xe5, 0x77, 0x77, 0x46 };
+unsigned char pchMessageStart[4] = { 0x33, 0xe7, 0x0c, 0xb5 };
 
 bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
 {
