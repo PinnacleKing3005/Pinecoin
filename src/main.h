@@ -29,8 +29,8 @@ class CNode;
 
 class CTxMemPool;
 
-static const int LAST_POW_BLOCK = 1000;
-static const bool LIMIT_POW_BLOCKS = false;
+static const int LAST_POW_BLOCK = 100;
+static const bool LIMIT_POW_BLOCKS = true;
 
 /** The maximum allowed size for a serialized block, in bytes (network rule) */
 static const unsigned int MAX_BLOCK_SIZE = 1000000;
